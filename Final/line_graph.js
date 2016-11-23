@@ -1,81 +1,59 @@
-(function(){
-    var width = 700;
-    var height = 200;
 
-    var svg = d3.select("#line")
-      .append("svg")
-      .attr("width", width)
-      .attr("height", height)
-      .append("g")
+// set the dimensions and margins of the graph
+var margin = {top: 20, right: 20, bottom: 30, left: 50},
+    width = 700 - margin.left - margin.right,
+    height = 400 - margin.top - margin.bottom;
 
-      // .attr("id", "line-graph")
-      // .attr("xmlns", "http://www.w3.org/2000/svg");
+// parse the date / time
+ var parseTime = d3.timeParse("%y");
 
-    var x = d3.scaleTime().domain([0, 10]).range([0, 700]);
-    var y = d3.scaleLinear().domain([0, 10]).range([10, 290]);
-    var parseTime = d3.timeParse("%y");
+// set the ranges
+var x = d3.scaleTime().range([0, width]);
+var y = d3.scaleLinear().range([height, 0]);
 
-    var line = d3.line()
-      .interpolate("cardinal")
-      .x(function(d) {return x(d.Year);}
-      .y(function(d) {return y(d.Annual_norm);})
+// define the line
+var valueline = d3.line()
+    .x(function(d) { return x(d.Year); })
+    .y(function(d) { return y(d.Annual); });
 
+// append the svg obgect to the body of the page
+// appends a 'group' element to 'svg'
+// moves the 'group' element to the top left margin
+var svg = d3.select("#line_graph")
+  .append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform",
+          "translate(" + margin.left + "," + margin.top + ")");
 
+// Get the data
+d3.csv("apparel.csv", function(error, data) {
+  if (error) throw error;
 
-    d3.queue()
-      .defer(d3.csv, "apparel.csv")
-      .await(ready)
+  // format the data
+  data.forEach(function(d) {
+      d.Year  = +d.Year_n;
+      d.Annual = +d.Annual_norm;
+  });
 
-    function ready(error, data) {
+  // Scale the range of the data
+  x.domain(d3.extent(data, function(d) { return d.Year; }));
+  y.domain([0, d3.max(data, function(d) { return d.Annual; })]);
 
-    // format the data
-    data.forEach(function(d) {
-        d.Year = parseTime(d.Year);
-    });
+  // Add the valueline path.
+  svg.append("path")
+      .data([data])
+      .attr("class", "line")
+      .attr("d", valueline);
 
-    x.domain(d3.extent(data,function(d){
-      return d.Year;}));
-    y.domain([0,1.5])
+  // Add the X Axis
+  svg.append("g")
+      .attr("transform", "translate(0," + height + ")")
+      .call(d3.axisBottom(x));
 
-    var path = svg.append("path")
-      .attr("d", line(data))
-      .attr("stroke", "steelblue")
-      .attr("stroke-width", "2")
-      .attr("fill", "none");
+  // Add the Y Axis
+  svg.append("g")
+      .call(d3.axisLeft(y));
 
-    var totalLength = path.node().getTotalLength();
-    //
-    // // Add the valueline path.
-    // svg.append("path")
-    //     .data([data])
-    //     .attr("class", "line")
-    //     .attr("d", valueline);
-    //
-    // // Add the X Axis
-    // svg.append("g")
-    //     .attr("transform", "translate(0," + height + ")")
-    //     .call(d3.axisBottom(x));
-    //
-    // // Add the Y Axis
-    // svg.append("g")
-    //     .call(d3.axisLeft(y));
-
-
-    path
-      .attr("stroke-dasharray", totalLength + " " + totalLength)
-      .attr("stroke-dashoffset", totalLength)
-      .transition()
-      .duration(2000)
-      .ease("linear")
-      .attr("stroke-dashoffset", 0);
-
-    svg.on("click", function(){
-      path
-        .transition()
-        .duration(2000)
-        .ease("linear")
-        .attr("stroke-dashoffset", totalLength);
-    })
-
-  }
-})();
+});
