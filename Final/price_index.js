@@ -218,13 +218,11 @@ var path = d3.line()
           d3.select(this)
             .attr("fill", "red");
           console.log(this.centroid)
-          svg.select("circle")
-            .datum(this.centroid)
-            .enter().append("circle")
-            .attr("r", 20)
+          svg.append("circle")
+            .attr("r", 2)
             .attr("fill", "green")
-            .attr("cx", d[0])
-            .attr("cy", d[1])
+            .attr("cx", this.centroid[0])
+            .attr("cy", this.centroid[1])
         });
 
 
