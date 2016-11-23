@@ -44,7 +44,7 @@
       .attr("fill", "none");
 
     var totalLength = path.node().getTotalLength();
-    // 
+    //
     // // Add the valueline path.
     // svg.append("path")
     //     .data([data])
