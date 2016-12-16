@@ -15,10 +15,10 @@
 
 //this next part is stolen from http://stackoverflow.com/questions/39899970/how-do-i-draw-an-arrow-between-two-points-in-d3v4
 
-var arrowRadius = 6,
+var arrowRadius = 5,
 arrowPointRadius = arrowRadius * 2,
 arrowPointHeight = arrowRadius * 3,
-baseHeight = 30;
+baseHeight = 100;
 
 // Arrow function
 function CurvedArrow(context, index) {
@@ -151,7 +151,7 @@ var points = [{
   speed: 2,
   phi0: 190
 }];
-var path = d3.line()
+var curvedLinePath = d3.line()
   .curve(function(ctx) {
     return new CurvedArrow(ctx, 1);
   });
@@ -164,9 +164,10 @@ var path = d3.line()
 
   d3.queue()
     .defer(d3.json, "world.topojson")
-    //.defer(d3.csv, "all_month.csv")
+    //.defer(d3.csv, "centroids.csv")
     .await(ready)
 
+  //function ready(error, world, centroidsCsv) {
   function ready(error, world) {
 
     var projection = d3.geoMercator()
@@ -175,19 +176,21 @@ var path = d3.line()
 
     var path = d3.geoPath()
       .projection(projection);
+    //
+    // var arrow = d3.line()
+    //   .curve(function(ctx){
+    //     return new CurvedArrow(ctx,1)
+    //   })
 
-    var arrow = d3.line()
-      .curve(function(ctx){
-        return new CurvedArrow(ctx,1)
-      })
-
+    //var fixed_centroids = centroidsCsv.map(function(){})
     var countries = topojson.feature(world, world.objects.countries).features;
     var centroids = countries.map(function(feature){
       //console.log(feature)
       return path.centroid(feature);
     });
-
-      //console.log(typeof(centroids))
+      //console.log(projection([-98.5795, 39.828175]));
+      //console.log(countries)
+      usaCentroid=projection([-98.5795, 39.828175]);
 
       svg.selectAll(".country")
         .data(countries)
@@ -217,12 +220,20 @@ var path = d3.line()
             .attr("fill", "gray");
           d3.select(this)
             .attr("fill", "red");
-          console.log(this.centroid)
-          svg.append("circle")
-            .attr("r", 2)
+          console.log(this.centroid);
+          var curCentroid = this.centroid;
+          var bigArrow = svg.append("path")
+            .attr("d", function(){
+              return curvedLinePath([
+                [curCentroid[0], curCentroid[1]],
+                [usaCentroid[0], usaCentroid[1]]])
+            })
             .attr("fill", "green")
-            .attr("cx", this.centroid[0])
-            .attr("cy", this.centroid[1])
+            .attr("opacity", 0.75)
+            // .attr("x1", this.centroid[0])
+            // .attr("y1", this.centroid[1])
+            // .attr("x2", 0)
+            // .attr("y2", 0)
         });
 
 
