@@ -219,53 +219,64 @@ var arrowSize = d3.scaleLinear().range([2, 20]);
         .attr("stroke", "black")
         .attr("stroke-width", 0.3)
         .attr("opacity", 0.5)
-        .attr("fill", "gray")
+        .attr("fill", function(d){
+          if (d.properties.name == "China") {return "red"}
+          else {return "gray"}
+        })
         .property("centroid", function(d){
           return path.centroid(d);
         })
         .on("mouseover", function(){
           d3.select(this)
-            .attr("fill", "blue")
+            .attr("opacity", 0.75)
             //console.log(this.centroid)
         })
         .on("mouseout", function(){
           d3.select(this)
-            .attr("fill", "gray")})
+            .attr("opacity", 0.50)})
         .on("click", function(){
-          d3.selectAll(".country")
-            .attr("fill", "gray");
-          d3.select(this)
-            .attr("fill", "red");
+          // d3.selectAll(".country")
+          //   .attr("fill", "gray");
+          // d3.select(this)
+          //   .attr("fill", "red");
           //console.log(this.centroid);
-          var curCentroid = this.centroid;
-          // var bigArrow = svg.append("path")
-          //   .attr("d", function(){
-          //     return curvedLinePath([
-          //       [curCentroid[0], curCentroid[1]],
-          //       [usaCentroid[0], usaCentroid[1]]])
-          //   })
-          //   .attr("fill", "green")
-          //   .attr("opacity", 0.75);;
+          //console.log(this.id)
 
-          var i=2, count=12;
-          function f(){
-            arrowRadius=i;
-            console.log(arrowRadius);
+          if (this.id == "China") {
+            var curCentroid = this.centroid;
+            // var bigArrow = svg.append("path")
+            //   .attr("d", function(){
+            //     return curvedLinePath([
+            //       [curCentroid[0], curCentroid[1]],
+            //       [usaCentroid[0], usaCentroid[1]]])
+            //   })
+            //   .attr("fill", "green")
+            //   .attr("opacity", 0.25);
+            // }
+            var i=2, count=12;
+            var bigArrow = svg.append("path").attr("class", "arrow");
 
-            var bigArrow = svg.append("path")
-              .attr("d", function(){
-                return curvedLinePath([
-                  [curCentroid[0], curCentroid[1]],
-                  [usaCentroid[0], usaCentroid[1]]])
-              })
-              .attr("fill", "green")
-              .attr("opacity", 0.75);;
-            i++;
-            if(i<count){
-              setTimeout(f, 500);
+
+
+            function f(){
+              arrowRadius=i;
+              //console.log(arrowRadius);
+
+                bigArrow
+                .attr("d", function(){
+                  return curvedLinePath([
+                    [curCentroid[0], curCentroid[1]],
+                    [usaCentroid[0], usaCentroid[1]]])
+                })
+                .attr("fill", "green")
+                .attr("opacity", 0.75);
+              i+=0.1;
+              if(i<count){
+                setTimeout(f, 100);
+              }
             }
+            f();
           }
-          f();
             // .attr("x1", this.centroid[0])
             // .attr("y1", this.centroid[1])
             // .attr("x2", 0)
