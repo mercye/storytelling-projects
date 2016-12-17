@@ -15,10 +15,10 @@
 
 //this next part is stolen from http://stackoverflow.com/questions/39899970/how-do-i-draw-an-arrow-between-two-points-in-d3v4
 
-var arrowRadius = 6,
+var arrowRadius = 5,
 arrowPointRadius = arrowRadius * 2,
 arrowPointHeight = arrowRadius * 3,
-baseHeight = 30;
+baseHeight = 100;
 
 // Arrow function
 function CurvedArrow(context, index) {
@@ -151,7 +151,7 @@ var points = [{
   speed: 2,
   phi0: 190
 }];
-var path = d3.line()
+var curvedLinePath = d3.line()
   .curve(function(ctx) {
     return new CurvedArrow(ctx, 1);
   });
@@ -159,15 +159,32 @@ var path = d3.line()
 //end blatant stackoverflow thievery
 
 
+var arrowTime = d3.scaleTime().range([0, width]);
+var arrowSize = d3.scaleLinear().range([2, 20]);
 
 
 
   d3.queue()
     .defer(d3.json, "world.topojson")
-    //.defer(d3.csv, "all_month.csv")
+    .defer(d3.csv, "apparel.csv")
+    //.defer(d3.csv, "centroids.csv")
     .await(ready)
 
-  function ready(error, world) {
+  //function ready(error, world, centroidsCsv) {
+  function ready(error, world, apparel) {
+
+    apparel.forEach(function(d) {
+      //format year
+        d.Year  = +d.Year_n;
+        d.Annual = +d.Annual_norm;
+    });
+
+    arrowTime.domain(d3.extent(apparel, function(d) {
+       return d.Year; }));
+    arrowSize.domain([0, d3.max(apparel, function(d) {
+      return d.Annual; })]);
+
+    console.log(arrowSize(0.2))
 
     var projection = d3.geoMercator()
       .translate([width/2, height/2])
@@ -175,19 +192,21 @@ var path = d3.line()
 
     var path = d3.geoPath()
       .projection(projection);
+    //
+    // var arrow = d3.line()
+    //   .curve(function(ctx){
+    //     return new CurvedArrow(ctx,1)
+    //   })
 
-    var arrow = d3.line()
-      .curve(function(ctx){
-        return new CurvedArrow(ctx,1)
-      })
-
+    //var fixed_centroids = centroidsCsv.map(function(){})
     var countries = topojson.feature(world, world.objects.countries).features;
     var centroids = countries.map(function(feature){
       //console.log(feature)
       return path.centroid(feature);
     });
-
-      //console.log(typeof(centroids))
+      //console.log(projection([-98.5795, 39.828175]));
+      //console.log(countries)
+      usaCentroid=projection([-98.5795, 39.828175]);
 
       svg.selectAll(".country")
         .data(countries)
@@ -217,12 +236,40 @@ var path = d3.line()
             .attr("fill", "gray");
           d3.select(this)
             .attr("fill", "red");
-          console.log(this.centroid)
-          svg.append("circle")
-            .attr("r", 2)
-            .attr("fill", "green")
-            .attr("cx", this.centroid[0])
-            .attr("cy", this.centroid[1])
+          //console.log(this.centroid);
+          var curCentroid = this.centroid;
+          // var bigArrow = svg.append("path")
+          //   .attr("d", function(){
+          //     return curvedLinePath([
+          //       [curCentroid[0], curCentroid[1]],
+          //       [usaCentroid[0], usaCentroid[1]]])
+          //   })
+          //   .attr("fill", "green")
+          //   .attr("opacity", 0.75);;
+
+          var i=2, count=12;
+          function f(){
+            arrowRadius=i;
+            console.log(arrowRadius);
+
+            var bigArrow = svg.append("path")
+              .attr("d", function(){
+                return curvedLinePath([
+                  [curCentroid[0], curCentroid[1]],
+                  [usaCentroid[0], usaCentroid[1]]])
+              })
+              .attr("fill", "green")
+              .attr("opacity", 0.75);;
+            i++;
+            if(i<count){
+              setTimeout(f, 500);
+            }
+          }
+          f();
+            // .attr("x1", this.centroid[0])
+            // .attr("y1", this.centroid[1])
+            // .attr("x2", 0)
+            // .attr("y2", 0)
         });
 
 
@@ -236,7 +283,7 @@ var path = d3.line()
     //   .attr("cx", function(d){return d[0]})
     //   .attr("cy", function(d){return d[1]})
 
-    var usaCenter = d3.select("#United-States")
+    //var usaCenter = d3.select("#United-States")
     //   .centroid()
     //
     //console.log(usaCenter)
