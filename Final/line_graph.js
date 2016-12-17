@@ -32,7 +32,7 @@ d3.csv("apparel.csv", function(error, data) {
   data.forEach(function(d) {
     //format year
       d.Year  = +d.Year_n;
-      d.Annual = +d.Annual_norm;
+      d.Annual = +d.Annual;
   });
 
   // Scale the range of the data
