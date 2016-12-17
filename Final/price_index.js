@@ -9,6 +9,9 @@
         .append("g")
         .attr("transform", "translate(0,0)");
 
+  var exportArrowScale = d3.scaleLinear().range([0,10]);
+  var importArrowScale = d3.scaleLinear().range([0,10]);
+
   // var radiusScale = d3.scaleSqrt()
   //   .domain([0, 10])
   //   .range([0.1, 5])
@@ -16,8 +19,11 @@
 //this next part is stolen from http://stackoverflow.com/questions/39899970/how-do-i-draw-an-arrow-between-two-points-in-d3v4
 
 var arrowRadius = 5,
+arrowRadius2 = 5,
 arrowPointRadius = arrowRadius * 2,
 arrowPointHeight = arrowRadius * 3,
+arrowPointRadius2 = arrowRadius2 * 2,
+arrowPointHeight2 = arrowRadius2 * 3,
 baseHeight = 100;
 
 // Arrow function
@@ -27,20 +33,15 @@ function CurvedArrow(context, index) {
 }
 CurvedArrow.prototype = {
   areaStart: function() {
-    this._line = 0;
-  },
+    this._line = 0;  },
   areaEnd: function() {
-    this._line = NaN;
-  },
+    this._line = NaN;  },
   lineStart: function() {
-    this._point = 0;
-  },
+    this._point = 0;  },
   lineEnd: function() {
     if (this._line || (this._line !== 0 && this._point === 1)) {
-      this._context.closePath();
-    }
-    this._line = 1 - this._line;
-  },
+      this._context.closePath();    }
+    this._line = 1 - this._line;  },
   point: function(x, y) {
     x = +x, y = +y; // jshint ignore:line
     switch (this._point) {
@@ -56,15 +57,6 @@ CurvedArrow.prototype = {
           p1y = this._p1y,
           p2x = x,
           p2y = y,
-
-          //Curve figures
-
-          //             mp1
-          //              |
-          //              | height
-          //              |
-          // p1 ----------------------- p2
-          //
           alpha = Math.floor((this._index - 1) / 2),
           direction = p1y < p2y ? -1 : 1,
           height = (baseHeight + alpha * 3 * arrowPointRadius) * direction,
@@ -75,7 +67,6 @@ CurvedArrow.prototype = {
           // Perpendicular point from the midpoint.
           mp1x = c1mx + height * (1 / den1),
           mp1y = c1my + height * (m1b / den1),
-
           // Arrow figures
           dx = p2x - mp1x,
           dy = p2y - mp1y,
@@ -91,7 +82,6 @@ CurvedArrow.prototype = {
           awy = ny * arrowPointRadius,
           phx = nx * arrowRadius,
           phy = ny * arrowRadius,
-
           // Start arrow offset.
           sdx = mp1x - p1x,
           sdy = mp1y - p1y,
@@ -100,14 +90,102 @@ CurvedArrow.prototype = {
           sny = -sdx / spr,
           sphx = snx * arrowRadius,
           sphy = sny * arrowRadius,
+          r1x = p1x - sphx,
+          r1y = p1y - sphy,
+          r2x = p2x - phx - ahx,
+          r2y = p2y - phy - ahy,
+          r3x = p2x - awx - ahx,
+          r3y = p2y - awy - ahy,
+          r4x = p2x,
+          r4y = p2y,
+          r5x = p2x + awx - ahx,
+          r5y = p2y + awy - ahy,
+          r6x = p2x + phx - ahx,
+          r6y = p2y + phy - ahy,
+          r7x = p1x + sphx,
+          r7y = p1y + sphy,
+          mpc1x = mp1x - phx,
+          mpc1y = mp1y - phy,
+          mpc2x = mp1x + phx,
+          mpc2y = mp1y + phy;
 
-          //             r5
-          //r7         r6|\
-          // ------------  \
-          // ____________  /r4
-          //r1         r2|/
-          //             r3
+        this._context.moveTo(r1x, r1y);
+        this._context.quadraticCurveTo(mpc1x, mpc1y, r2x, r2y);
+        this._context.lineTo(r3x, r3y);
+        this._context.lineTo(r4x, r4y);
+        this._context.lineTo(r5x, r5y);
+        this._context.lineTo(r6x, r6y);
+        this._context.quadraticCurveTo(mpc2x, mpc2y, r7x, r7y);
+        this._context.closePath();
 
+        break;
+    }
+  }
+};
+
+function CurvedArrow2(context, index) {
+  this._context = context;
+  this._index = index;
+}
+CurvedArrow2.prototype = {
+  areaStart: function() {
+    this._line = 0;  },
+  areaEnd: function() {
+    this._line = NaN;  },
+  lineStart: function() {
+    this._point = 0;  },
+  lineEnd: function() {
+    if (this._line || (this._line !== 0 && this._point === 1)) {
+      this._context.closePath();    }
+    this._line = 1 - this._line;  },
+  point: function(x, y) {
+    x = +x, y = +y; // jshint ignore:line
+    switch (this._point) {
+      case 0:
+        this._point = 1;
+        this._p1x = x;
+        this._p1y = y;
+        break;
+      case 1:
+        this._point = 2; // jshint ignore:line
+      default:
+        var p1x = this._p1x,
+          p1y = this._p1y,
+          p2x = x,
+          p2y = y,
+          alpha = Math.floor((this._index - 1) / 2),
+          direction = p1y < p2y ? -1 : 1,
+          height = (baseHeight + alpha * 3 * arrowPointRadius2) * direction,
+          c1mx = (p2x + p1x) / 2,
+          c1my = (p2y + p1y) / 2,
+          m1b = (c1mx - p1x) / (p1y - c1my),
+          den1 = Math.sqrt(1 + Math.pow(m1b, 2)),
+          // Perpendicular point from the midpoint.
+          mp1x = c1mx + height * (1 / den1),
+          mp1y = c1my + height * (m1b / den1),
+          // Arrow figures
+          dx = p2x - mp1x,
+          dy = p2y - mp1y,
+          dr = Math.sqrt(dx * dx + dy * dy),
+          // Normal unit vectors
+          nx = dy / dr,
+          wy = nx,
+          wx = dx / dr,
+          ny = -wx,
+          ahx = wx * arrowPointHeight2,
+          ahy = wy * arrowPointHeight2,
+          awx = nx * arrowPointRadius2,
+          awy = ny * arrowPointRadius2,
+          phx = nx * arrowRadius2,
+          phy = ny * arrowRadius2,
+          // Start arrow offset.
+          sdx = mp1x - p1x,
+          sdy = mp1y - p1y,
+          spr = Math.sqrt(sdy * sdy + sdx * sdx),
+          snx = sdy / spr,
+          sny = -sdx / spr,
+          sphx = snx * arrowRadius2,
+          sphy = sny * arrowRadius2,
           r1x = p1x - sphx,
           r1y = p1y - sphy,
           r2x = p2x - phx - ahx,
@@ -156,35 +234,59 @@ var curvedLinePath = d3.line()
     return new CurvedArrow(ctx, 1);
   });
 
+var curvedLinePath2 = d3.line()
+  .curve(function(ctx) {
+    return new CurvedArrow2(ctx, 1);
+  });
+
 //end blatant stackoverflow thievery
 
 
-var arrowTime = d3.scaleTime().range([0, width]);
-var arrowSize = d3.scaleLinear().range([2, 20]);
+// var arrowTime = d3.scaleTime().range([0, width]);
+// var arrowSize = d3.scaleLinear().range([2, 20]);
 
 
 
   d3.queue()
     .defer(d3.json, "world.topojson")
-    .defer(d3.csv, "apparel.csv")
+    .defer(d3.csv, "exports_imports_china.csv")
     //.defer(d3.csv, "centroids.csv")
     .await(ready)
 
   //function ready(error, world, centroidsCsv) {
-  function ready(error, world, apparel) {
+  function ready(error, world, trade) {
 
-    apparel.forEach(function(d) {
-      //format year
-        d.Year  = +d.Year_n;
-        d.Annual = +d.Annual_norm;
-    });
+    var importArrow = svg.append("path").attr("class", "arrow");
+    var exportArrow = svg.append("path").attr("class", "arrow");
 
-    arrowTime.domain(d3.extent(apparel, function(d) {
-       return d.Year; }));
-    arrowSize.domain([0, d3.max(apparel, function(d) {
-      return d.Annual; })]);
+    //importArrowScale.domain([min(trade.Import), max(trade.Import)])
+    trade.forEach(function(d){
+      d.Imports = +d.Imports;
+      d.Exports = +d.Exports;
+    })
 
-    console.log(arrowSize(0.2))
+    var importMax = d3.max(trade, function(d) {return d.Imports});
+    var importMin = d3.min(trade, function(d) {return d.Imports});
+    var exportMax = d3.max(trade, function(d) {return d.Exports});
+    var exportMin = d3.min(trade, function(d) {return d.Exports});
+
+    importArrowScale.domain([importMin, importMax]);
+    exportArrowScale.domain([exportMin, exportMax]);
+
+    //console.log(importMax)
+
+    // apparel.forEach(function(d) {
+    //   //format year
+    //     d.Year  = +d.Year_n;
+    //     d.Annual = +d.Annual_norm;
+    // });
+
+    // arrowTime.domain(d3.extent(apparel, function(d) {
+    //    return d.Year; }));
+    // arrowSize.domain([0, d3.max(apparel, function(d) {
+    //   return d.Annual; })]);
+
+    //console.log(arrowSize(0.2))
 
     var projection = d3.geoMercator()
       .translate([width/2, height/2])
@@ -253,16 +355,19 @@ var arrowSize = d3.scaleLinear().range([2, 20]);
             //   .attr("fill", "green")
             //   .attr("opacity", 0.25);
             // }
-            var i=2, count=12;
-            var bigArrow = svg.append("path").attr("class", "arrow");
-
-
+            var i=0, count=14;
 
             function f(){
-              arrowRadius=i;
+              arrowRadius= importArrowScale(trade[i].Imports);
+              arrowRadius2= exportArrowScale(trade[i].Exports);
+              // arrowRadius= i;
+              // arrowRadius2= 12-i;
               //console.log(arrowRadius);
 
-                bigArrow
+              importArrow.attr("d", "");
+              exportArrow.attr("d", "");
+
+              importArrow
                 .attr("d", function(){
                   return curvedLinePath([
                     [curCentroid[0], curCentroid[1]],
@@ -270,8 +375,17 @@ var arrowSize = d3.scaleLinear().range([2, 20]);
                 })
                 .attr("fill", "green")
                 .attr("opacity", 0.75);
-              i+=0.1;
-              if(i<count){
+              exportArrow
+                .attr("d", function(){
+                  return curvedLinePath2([
+                    [usaCentroid[0], usaCentroid[1]],
+                    [curCentroid[0], curCentroid[1]]])
+                })
+                .attr("fill", "red")
+                .attr("opacity", 0.75);
+
+              i++;
+              if(i<=count){
                 setTimeout(f, 100);
               }
             }
