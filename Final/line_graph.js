@@ -31,13 +31,13 @@ d3.csv("apparel.csv", function(error, data) {
   // format the data
   data.forEach(function(d) {
     //format year
-      d.Year  = +d.Year_n;
+      d.Year  = d.Year_n;
       d.Annual = +d.Annual;
   });
 
   // Scale the range of the data
   x.domain(d3.extent(data, function(d) { return d.Year; }));
-  y.domain([100, 135]);
+  y.domain([115, 130]);
 
   // Add the valueline path
   var path = svg.append("path")
