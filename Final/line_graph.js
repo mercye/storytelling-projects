@@ -29,9 +29,11 @@ d3.csv("apparel.csv", function(error, data) {
   if (error) throw error;
 
   // format the data
+  var formatYear = d3.timeFormat("%Y");
+
   data.forEach(function(d) {
     //format year
-      d.Year  = d.Year_n;
+      d.Year  = formatYear(d.Year_n);
       d.Annual = +d.Annual;
   });
 
