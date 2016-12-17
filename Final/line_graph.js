@@ -33,7 +33,7 @@ d3.csv("apparel.csv", function(error, data) {
 
   data.forEach(function(d) {
     //format year
-      d.Year  = formatYear(d.Year_n);
+      d.Year  = formatYear(d.Year);
       d.Annual = +d.Annual;
   });
 
