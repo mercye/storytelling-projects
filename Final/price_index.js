@@ -1,6 +1,6 @@
 (function() {
-  var height = 400,
-      width = 700;
+  // var height = 400,
+  //     width = 700;
 
   var svg = d3.select("#USA_vs_others")
         // .append("svg")
@@ -14,7 +14,7 @@
         .attr("preserveAspectRatio", "xMinYMin meet")
         .attr("viewBox", "0 0 600 400")
         .append("g")
-        .classed("svg-content-reponsive", true); 
+        .classed("svg-content-reponsive", true);
 
   var exportArrowScale = d3.scaleLinear().range([0,10]);
   var importArrowScale = d3.scaleLinear().range([0,10]);
