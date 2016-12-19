@@ -3,11 +3,18 @@
       width = 700;
 
   var svg = d3.select("#USA_vs_others")
+        // .append("svg")
+        // .attr("height", height)
+        // .attr("width", width)
+        // .append("g")
+        // .attr("transform", "translate(0,0)");
+        .append("div")
+        .classed("svg-container", true)
         .append("svg")
-        .attr("height", height)
-        .attr("width", width)
+        .attr("preserveAspectRatio", "xMinYMin meet")
+        .attr("viewBox", "0 0 600 400")
         .append("g")
-        .attr("transform", "translate(0,0)");
+        .classed("svg-content-reponsive", true); 
 
   var exportArrowScale = d3.scaleLinear().range([0,10]);
   var importArrowScale = d3.scaleLinear().range([0,10]);
