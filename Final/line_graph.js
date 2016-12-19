@@ -17,12 +17,13 @@ var valueline = d3.line()
     .y(function(d) { return y(d.Annual); });
 
 var svg = d3.select("#line_graph")
+  .append("div")
+  .classed("svg-container", true)
   .append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
+  .attr("preserveAspectRatio", "xMinYMin meet")
+  .attr("viewBox", "0 0 600 400")
   .append("g")
-    .attr("transform",
-          "translate(" + margin.left + "," + margin.top + ")");
+  .classed("svg-content-reponsive", true); 
 
 // Get the data
 d3.csv("apparel.csv", function(error, data) {
