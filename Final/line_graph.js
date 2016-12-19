@@ -13,7 +13,7 @@ var y = d3.scaleLinear().range([height, 0]);
 // define the line
 var valueline = d3.line()
   .curve(d3.curveCatmullRom)
-    .x(function(d) { return x(d.Year); })
+    .x(function(d) { return x(formatYear(d.Year)); })
     .y(function(d) { return y(d.Annual); });
 
 var svg = d3.select("#line_graph")
