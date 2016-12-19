@@ -1,7 +1,7 @@
-// // set the dimensions and margins of the graph
-// var margin = {top: 20, right: 20, bottom: 30, left: 50},
-//     width = 700 - margin.left - margin.right,
-//     height = 200 - margin.top - margin.bottom;
+// set the dimensions and margins of the graph
+var margin = {top: 20, right: 20, bottom: 30, left: 50},
+    width = 700 - margin.left - margin.right,
+    height = 200 - margin.top - margin.bottom;
 
 // parse the date / time
 // var parseTime = d3.timeParse("%y");
@@ -17,13 +17,12 @@ var valueline = d3.line()
     .y(function(d) { return y(d.Annual); });
 
 var svg = d3.select("#line_graph")
-  .append("div")
-  .classed("svg-container", true)
   .append("svg")
-  .attr("preserveAspectRatio", "xMinYMin meet")
-  .attr("viewBox", "0 0 200 700")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
   .append("g")
-  .classed("svg-content-reponsive", true);
+    .attr("transform",
+          "translate(" + margin.left + "," + margin.top + ")");
 
 // Get the data
 d3.csv("apparel.csv", function(error, data) {
