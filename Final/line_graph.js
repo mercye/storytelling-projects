@@ -62,7 +62,8 @@ d3.csv("apparel.csv", function(error, data) {
   svg.append("g")
       .attr("transform", "translate(0," + height + ")")
       .call(d3.axisBottom(x)
-              .tickFormat(d3.time.format("%Y")));
+          .tickvalues([1980,2015]));
+              //.tickFormat(d3.time.format("%Y")));
 
   // Y Axis
   svg.append("g")
