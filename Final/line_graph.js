@@ -7,7 +7,9 @@ var margin = {top: 20, right: 20, bottom: 30, left: 50},
 var formatYear = d3.timeFormat("%Y")
 
 // set the ranges
-var x = d3.scaleTime().range([0, width]);
+var x = d3.scaleTime()
+          .domain(function(d) {return(d.Year)})
+          .range([0, width]);
 var y = d3.scaleLinear().range([height, 0]);
 
 // define the line
@@ -62,8 +64,10 @@ d3.csv("apparel.csv", function(error, data) {
   svg.append("g")
       .attr("transform", "translate(0," + height + ")")
       .call(d3.axisBottom(x)
-          .tickvalues([1980,2015]));
-              //.tickFormat(d3.time.format("%Y")));
+              .ticks(d3.timeYear)
+//              .tickFormat(d3.time.format("%Y"))
+            );
+
 
   // Y Axis
   svg.append("g")
