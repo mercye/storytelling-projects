@@ -37,7 +37,7 @@ d3.csv("apparel.csv", function(error, data) {
 
   // Scale the range of the data
   x.domain(d3.extent(data, function(d) { return d.Year; }));
-  y.domain([115, 130]);
+  y.domain([115, 140]);
 
   // Add the valueline path
   var path = svg.append("path")
