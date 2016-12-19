@@ -1,7 +1,7 @@
-// set the dimensions and margins of the graph
-var margin = {top: 20, right: 20, bottom: 30, left: 50},
-    width = 700 - margin.left - margin.right,
-    height = 200 - margin.top - margin.bottom;
+// // set the dimensions and margins of the graph
+// var margin = {top: 20, right: 20, bottom: 30, left: 50},
+//     width = 700 - margin.left - margin.right,
+//     height = 200 - margin.top - margin.bottom;
 
 // parse the date / time
 // var parseTime = d3.timeParse("%y");
@@ -23,7 +23,7 @@ var svg = d3.select("#line_graph")
   .attr("preserveAspectRatio", "xMinYMin meet")
   .attr("viewBox", "0 0 600 400")
   .append("g")
-  .classed("svg-content-reponsive", true); 
+  .classed("svg-content-reponsive", true);
 
 // Get the data
 d3.csv("apparel.csv", function(error, data) {
