@@ -4,8 +4,8 @@ var margin = {top: 20, right: 20, bottom: 30, left: 50},
     height = 200 - margin.top - margin.bottom;
 
 // parse the date / time
-var parseDate = d3.timeFormat("%d-%b-%y");
-var format = d3.timeFormat("%Y")
+var formatYear = d3.timeFormat("%Y")
+
 // set the ranges
 var x = d3.scaleTime().range([0, width]);
 var y = d3.scaleLinear().range([height, 0]);
@@ -31,7 +31,7 @@ d3.csv("apparel.csv", function(error, data) {
   // format the data
   data.forEach(function(d) {
     //format year
-      d.Year  = +d.Year_n;
+      d.Year  = formatYear(d.Year);
       d.Annual = +d.Annual;
   })
 
