@@ -12,7 +12,7 @@
         .classed("svg-container", true)
         .append("svg")
         .attr("preserveAspectRatio", "xMinYMin meet")
-        .attr("viewBox", "0 0 600 400")
+        .attr("viewBox", "0 0 400 700")
         .append("g")
         .classed("svg-content-reponsive", true);
 

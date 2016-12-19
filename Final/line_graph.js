@@ -21,7 +21,7 @@ var svg = d3.select("#line_graph")
   .classed("svg-container", true)
   .append("svg")
   .attr("preserveAspectRatio", "xMinYMin meet")
-  .attr("viewBox", "0 0 600 400")
+  .attr("viewBox", "0 0 200 700")
   .append("g")
   .classed("svg-content-reponsive", true);
 
