@@ -1,7 +1,7 @@
 (function() {
     var margin = { top: 30, left: 30, right: 30, bottom: 30},
-    height = 500 - margin.top - margin.bottom,
-    width = 1500 - margin.left - margin.right;
+    height = 400 - margin.top - margin.bottom,
+    width = 1200 - margin.left - margin.right;
 
   // var svg1 = d3.select("svg");
 
