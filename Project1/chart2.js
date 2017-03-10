@@ -46,13 +46,14 @@
     .sort(null);
 
   d3.queue()
-    .defer(d3.csv, "data/topten.csv")
+    .defer(d3.csv, "data/bottomfive.csv")
     .await(ready)
 
   function ready(error, datapoints) {
     var nested = d3.nest()
       .key(function(d) {
-        return d.recipient;
+        if (d.year_total < 942786462.4) {
+          return d.recipient};
       })
       .entries(datapoints);
 

@@ -1,0 +1,56 @@
+year,donor,recipient,coalesced_purpose_code,coalesced_purpose_name,year_purpose_total,year_total,categories
+2010,United States,Afghanistan,91010,Administrative costs,13597556.28,3440059964,Administrative
+2010,United States,Afghanistan,41000,"General environmental protection, combinations of purposes",9978910,3440059964,Agriculture/Env
+2010,United States,Afghanistan,15151,Elections,585073,3440059964,Civil Society
+2010,United States,Afghanistan,21020,Road transport,124891300,3440059964,Trans/Comm
+2010,United States,Afghanistan,11220,Primary education,94820980,3440059964,Education
+2010,United States,Afghanistan,13000,"Population policies/ programmes and reproductive health, combinations of activities",8513750,3440059964,Health
+2010,United States,Afghanistan,73010,Reconstruction relief and rehabilitation,43640400,3440059964,Emergeny Disaster Relief
+2010,United States,Afghanistan,23040,Electrical transmission/distribution,7129890,3440059964,Energy
+2010,United States,Afghanistan,25010,Business support services and institutions,64473830,3440059964,Banking/Business
+2010,United States,Afghanistan,14010,Water resources policy/admin. mgmt,9843820,3440059964,Water
+2010,United States,Afghanistan,52010,Food aid/Food security programmes,29953031.41,3440059964,Food
+2010,United States,Pakistan,13000,"Population policies/ programmes and reproductive health, combinations of activities",989971,2022022234,Health
+2010,United States,Pakistan,15000,"Government and civil society, combination of activities",4949860,2022022234,Civil Society
+2010,United States,Pakistan,31182,Agricultural research,12622131,2022022234,Agriculture/Env
+2010,United States,Pakistan,21050,Air transport,855337,2022022234,Trans/Comm
+2010,United States,Pakistan,52010,Food security programmes/food aid,15460332,2022022234,Food
+2010,United States,Pakistan,24010,Financial policy & admin. management,15681100,2022022234,Banking/Business
+2010,United States,Pakistan,11420,Higher education,58012300,2022022234,Education
+2010,United States,Pakistan,14020,Water supply & sanit. - large systems,61888000,2022022234,Water
+2010,United States,Pakistan,72000,"Emergency Response, combination of purposes",2357252,2022022234,Emergeny Disaster Relief
+2010,United States,Pakistan,91010,Administrative costs,66605993.89,2022022234,Administrative
+2010,United States,Pakistan,23067,Solar energy,296888,2022022234,Energy
+2010,United States,Haiti,12100,"Health, general, combinations of activities",57349,1412402110,Health
+2010,United States,Haiti,15160,Human rights,626673.6,1412402110,Civil Society
+2010,United States,Haiti,41040,Site preservation,107171,1412402110,Agriculture/Env
+2010,United States,Haiti,24010,Financial policy and administrative management,8408345,1412402110,Banking/Business
+2010,United States,Haiti,11230,Basic life skills for youth and adults,3959880,1412402110,Education
+2010,United States,Haiti,23010,Energy policy and admin. management,12362858,1412402110,Energy
+2010,United States,Haiti,11000,"Education, combinations of purposes",11879700,1412402110,
+2010,United States,Haiti,21010,Transport policy & admin. management,566904.44,1412402110,Trans/Comm
+2010,United States,Haiti,70000,"Emergency Assistance and Reconstruction, combinations of purposes",63818215.11,1412402110,Emergeny Disaster Relief
+2010,United States,Haiti,91010,Administrative costs,11831811.8,1412402110,Administrative
+2010,United States,Haiti,52010,Food aid/Food security programmes,136853131.2,1412402110,Food
+2010,United States,Iraq,11220,Primary education,340087,981387901.6,Education
+2010,United States,Iraq,70000,"Emergency Assistance and Reconstruction, combinations of purposes",19770080,981387901.6,Emergeny Disaster Relief
+2010,United States,Iraq,12110,Health policy & admin. management,510183,981387901.6,Health
+2010,United States,Iraq,16061,Culture and recreation,19364688,981387901.6,Civil Society
+2010,United States,Iraq,14015,Water resources protection,334759,981387901.6,Water
+2010,United States,Iraq,52010,Food security programmes/food aid,1638790,981387901.6,Food
+2010,United States,Iraq,23010,Energy policy and admin. management,2406780,981387901.6,Energy
+2010,United States,Iraq,41040,Site preservation,1960140,981387901.6,Agriculture/Env
+2010,United States,Iraq,22020,Telecommunications,3343660,981387901.6,Trans/Comm
+2010,United States,Iraq,24040,Informal/semi-formal fin. intermed.,31679100,981387901.6,Banking/Business
+2010,United States,Iraq,99810,Sectors not specified,1139.46,981387901.6,Administrative
+2010,United States,Ethiopia,11420,Higher education,1361020,942786462.4,Education
+2010,United States,Ethiopia,41005,"General environmental protection, purpose unspecified (includes miscellaneous conservation and protection measures not mentioned below) or does not fit under any other applicable codes",494986,942786462.4,Agriculture/Env
+2010,United States,Ethiopia,70000,"Emergency Assistance and Reconstruction, combinations of purposes",9588697,942786462.4,Emergeny Disaster Relief
+2010,United States,Ethiopia,12220,Basic health care,1633452,942786462.4,Health
+2010,United States,Ethiopia,23064,Nuclear power plants,850799,942786462.4,Energy
+2010,United States,Ethiopia,15140,Government administration,989971,942786462.4,Civil Society
+2010,United States,Ethiopia,14020,Water supply and sanitation - large systems,7820410,942786462.4,Water
+2010,United States,Ethiopia,11000,"Education, combinations of purposes",16433440,942786462.4,
+2010,United States,Ethiopia,25020,Privatisation,11733900,942786462.4,Banking/Business
+2010,United States,Ethiopia,52010,Food aid/Food security programmes,277459518.1,942786462.4,Food
+2010,United States,Ethiopia,91010,Administrative costs,6978575.4,942786462.4,Administrative
