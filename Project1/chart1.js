@@ -46,7 +46,7 @@
     .sort(null);
 
   d3.queue()
-    .defer(d3.csv, "data/topten.csv")
+    .defer(d3.csv, "data/topfive.csv")
     .await(ready)
 
   function ready(error, datapoints) {
