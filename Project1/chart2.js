@@ -52,8 +52,7 @@
   function ready(error, datapoints) {
     var nested = d3.nest()
       .key(function(d) {
-        if (d.year_total < 942786462.4) {
-          return d.recipient};
+          return d.recipient;
       })
       .entries(datapoints);
 
