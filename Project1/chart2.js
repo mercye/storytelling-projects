@@ -5,7 +5,7 @@
 
   // var svg1 = d3.select("svg");
 
-  var svg = d3.select("#chart1")
+  var svg = d3.select("#chart2")
         .append("svg")
         .attr("height", height + margin.top + margin.bottom)
         .attr("width", width + margin.left + margin.right)
@@ -20,7 +20,7 @@
     //   .range(['#074F57','#077187', '#74A57F', '#9ECE9A', '#E4C5AF', '#DE6B48', '#E5B181', '#F4B9B2', '#DAEDBD', '#7DBBC3', '#6096BA'])
 
   var xPositionScale = d3.scalePoint()
-    .domain(['Afghanistan','Pakistan','Haiti','Iraq','Ethiopia'])
+    .domain(['Sudan','Palestinian Adm. Areas','Kenya','Colombia','Mexico'])
     .range([0, width])
     .padding(0.5);
 
